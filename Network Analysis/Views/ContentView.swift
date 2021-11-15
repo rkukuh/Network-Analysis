@@ -8,9 +8,17 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var books = [Book]()
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        List(books) { book in
+            Text("\(book.title)")
+        }
+        .onAppear() {
+            BooksApi().loadData { (books) in
+                self.books = books
+            }
+        }
     }
 }
 
