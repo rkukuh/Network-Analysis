@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+struct Book: Codable, Identifiable {
+    let id = UUID()
+    var author: String
+    var email: String
+    var title: String
+}
