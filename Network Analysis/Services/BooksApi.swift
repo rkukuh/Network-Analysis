@@ -15,19 +15,12 @@ class BooksApi: ObservableObject {
         
         guard let url = URL(string: booksApiURL) else { return }
         
-        let session = URLSession(configuration: .default)
-        
-        session.sessionDescription = "Main Session"
-        
-        let task = session.dataTask(with: url) { data, response, error in
+        URLSession.shared.dataTask(with: url) { data, response, error in
             let books = try! JSONDecoder().decode([Book].self, from: data!)
             
             DispatchQueue.main.async {
                 completion(books)
             }
-        }
-        
-        task.taskDescription = "Get books data"
-        task.resume()
+        }.resume()
     }
 }
