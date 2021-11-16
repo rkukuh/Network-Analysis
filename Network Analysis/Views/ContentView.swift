@@ -8,10 +8,18 @@
 import SwiftUI
 
 struct ContentView: View {
-    var body: some View {
-        Text("Hello, world!")
-            .padding()
-    }
+    @State var meals = [Meal]()
+        
+        var body: some View {
+            List(meals) { meal in
+                Text("\(meal.strMeal)")
+            }
+            .onAppear() {
+                MealDbApi().loadData { (meals) in
+                    self.meals = meals
+                }
+            }
+        }
 }
 
 struct ContentView_Previews: PreviewProvider {
