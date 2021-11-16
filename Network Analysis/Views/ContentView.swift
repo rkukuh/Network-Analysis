@@ -8,9 +8,15 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var food = Food(image: "")
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        Text("Network analysis")
+            .onAppear() {
+                FoodishApi().getData { (food) in
+                    self.food = food
+                }
+            }
     }
 }
 
