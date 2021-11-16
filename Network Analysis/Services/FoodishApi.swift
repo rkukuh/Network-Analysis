@@ -11,7 +11,7 @@ class FoodishApi: ObservableObject {
     @Published var food = Food(image: "")
     
     func getData(completion: @escaping (Food) -> ()) {
-        let urlString = "https://foodish-api.herokuapp.com/api/"
+        let urlString = "https://foodish-api.herokuapp.com/api/images/burger"
         
         guard let url = URL(string: urlString) else { return }
         
@@ -19,8 +19,6 @@ class FoodishApi: ObservableObject {
             if let data = data {
                 do {
                     let food = try JSONDecoder().decode(Food.self, from: data)
-                    
-                    print(food.image)
                     
                     DispatchQueue.main.async {
                         completion(food)
