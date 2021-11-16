@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+struct Meal: Decodable, Identifiable {
+    let id = UUID()
+    var strMeal: String
+    var strMealThumb: String
+}
