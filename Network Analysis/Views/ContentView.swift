@@ -11,12 +11,20 @@ struct ContentView: View {
     @State var food = Food(image: "")
     
     var body: some View {
-        Text("Network analysis")
-            .onAppear() {
-                FoodishApi().getData { (food) in
-                    self.food = food
-                }
+        AsyncImage(
+            url: URL(string: food.image),
+            content: { image in
+                image.resizable()
+                    .aspectRatio(contentMode: .fill)
+            },
+            placeholder: {
+                ProgressView()
             }
+        ).onAppear() {
+            FoodishApi().getData { (food) in
+                self.food = food
+            }
+        }
     }
 }
 
