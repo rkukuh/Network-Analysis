@@ -15,7 +15,11 @@ class FoodishApi: ObservableObject {
         
         guard let url = URL(string: urlString) else { return }
         
-        URLSession.shared.dataTask(with: url) { data, _, error in
+        let session = URLSession(configuration: .default)
+        
+        session.sessionDescription = "Main Session"
+        
+        let task = session.dataTask(with: url) { data, _, error in
             if let data = data {
                 do {
                     let food = try JSONDecoder().decode(Food.self, from: data)
@@ -27,6 +31,9 @@ class FoodishApi: ObservableObject {
                     print(error.localizedDescription)
                 }
             }
-        }.resume()
+        }
+        
+        task.taskDescription = "Get burger image"
+        task.resume()
     }
 }
