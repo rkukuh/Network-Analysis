@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+struct Food: Decodable {
+    var image: String
+}
