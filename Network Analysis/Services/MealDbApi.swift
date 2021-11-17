@@ -11,7 +11,7 @@ class MealDbApi: ObservableObject {
     @Published var meals = [Meal]()
     
     func loadData(completion: @escaping ([Meal]) -> ()) {
-        let mealDbApiURL = "www.themealdb.com/api/json/v1/1/filter.php?a=Japanese"
+        let mealDbApiURL = "https://www.themealdb.com/api/json/v1/1/filter.php?a=Japanese"
         
         guard let url = URL(string: mealDbApiURL) else { return }
         
@@ -20,12 +20,16 @@ class MealDbApi: ObservableObject {
         session.sessionDescription = "Main Session"
         
         let task = session.dataTask(with: url) { data, response, error in
-            let meals = try! JSONDecoder().decode([Meal].self, from: data!)
-            
-            print(meals)
-            
-            DispatchQueue.main.async {
-                completion(meals)
+            do {
+                let decodedData = try JSONDecoder().decode([Meal].self, from: data!)
+                
+                print(decodedData)
+                
+                DispatchQueue.main.async {
+                    completion(decodedData)
+                }
+            } catch {
+                print(error.localizedDescription)
             }
         }
         
